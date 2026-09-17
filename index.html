@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>300 Bài Toán Tư Duy Logic Lớp 1 - Chuẩn Sư Phạm Quốc Gia & Quốc Tế</title>
+  <meta name="description" content="Kho 300 bài toán tư duy logic lớp 1 phát triển trí tuệ toàn diện cho trẻ 6-7 tuổi: 100 Dễ, 100 Trung bình, 100 Khó vừa phải. Đồ họa vector sắc nét, âm thanh sống động, luyện đề thông minh và in ấn phiếu học tập." />
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Quicksand:wght@500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- Floating Background Bubbles -->
+  <div class="bg-decorations">
+    <div class="floating-bubble bubble-1"></div>
+    <div class="floating-bubble bubble-2"></div>
+    <div class="floating-bubble bubble-3"></div>
+  </div>
+
+  <!-- Confetti Canvas -->
+  <canvas id="confettiCanvas"></canvas>
+
+  <div class="container">
+    
+    <!-- Printable Worksheet Header (Chỉ hiện khi In ấn A4) -->
+    <div class="print-only">
+      <div class="print-header-info">
+        <div>
+          <div style="font-size: 14pt; font-weight: 800;">PHIẾU BÀI TẬP TOÁN TƯ DUY LOGIC LỚP 1</div>
+          <div style="font-size: 10pt; font-weight: normal; margin-top: 4px;" id="printSubtitle">Bộ câu hỏi phát triển năng lực quan sát, tư duy hình ảnh & suy luận toán học</div>
+        </div>
+        <div>
+          <div>Họ và tên: ................................................................</div>
+          <div style="margin-top: 6px;">Lớp: 1...... &nbsp;&nbsp;|&nbsp;&nbsp; Ngày: ....../...... / 202...</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- App Header -->
+    <header class="app-header">
+      <!-- Subject Switcher -->
+      <div class="subject-switcher" role="tablist">
+        <button class="subject-btn active" id="subjMathBtn" role="tab" aria-selected="true">
+          <span class="sub-icon">🔢</span>
+          <span class="sub-name">Toán Tư Duy Logic</span>
+          <span class="sub-badge">300 Bài</span>
+        </button>
+        <button class="subject-btn" id="subjEnglishBtn" role="tab" aria-selected="false">
+          <span class="sub-icon">🔤</span>
+          <span class="sub-name">Tiếng Anh Trẻ Em (English)</span>
+          <span class="sub-badge">CPA Song Ngữ</span>
+        </button>
+      </div>
+
+      <div class="header-badge" id="appHeaderBadge">
+        <span>🚀</span>
+        <span id="headerBadgeText">Kho Dữ Liệu 300 Bài Toán Tư Duy Logic Toàn Diện (6 - 7 Tuổi)</span>
+      </div>
+      <h1 class="app-title" id="appTitleText">300 BÀI TOÁN <span>TƯ DUY LOGIC</span></h1>
+      <p class="app-subtitle" id="appSubtitleText">
+        Khám phá toán học qua hình ảnh sắc màu, đại số hình ảnh, cân thăng bằng, tháp số, khối lập phương 3D và các câu đố kích thích não bộ!
+      </p>
+
+      <!-- Action Controls -->
+      <div class="controls-bar">
+        <button class="btn btn-outline active" id="viewModeSingleBtn">
+          🎯 Từng bài tương tác
+        </button>
+        <button class="btn btn-outline" id="viewModeAllBtn">
+          📋 Xem danh sách trang
+        </button>
+        <button class="btn btn-primary" id="quizModeBtn" title="Luyện đề 10 câu ngẫu nhiên có tính điểm">
+          🎲 Luyện đề ngẫu nhiên
+        </button>
+        <!-- English Specific Controls -->
+        <button class="btn btn-warning" id="translateToggleBtn" title="Bật / Tắt phiên dịch tiếng Việt">
+          🇻🇳 Dịch: BẬT
+        </button>
+        <div class="voice-selector" id="voiceSelectorBox">
+          <label for="accentSelect">🗣️ Giọng:</label>
+          <select id="accentSelect" class="accent-select">
+            <option value="en-US">🇺🇸 Giọng Mỹ (US)</option>
+            <option value="en-GB">🇬🇧 Giọng Anh (UK)</option>
+          </select>
+        </div>
+        <button class="btn btn-outline" id="soundToggleBtn">
+          🔊 Bật âm
+        </button>
+        <button class="btn btn-success" id="printBtn">
+          🖨️ In phiếu bài tập (A4)
+        </button>
+        <button class="btn btn-outline" id="resetBtn" title="Làm lại danh mục hiện tại">
+          🔄 Làm lại
+        </button>
+      </div>
+    </header>
+
+    <!-- Difficulty Tabs & Filter Bar -->
+    <section class="filter-container" aria-label="Bộ lọc bài toán">
+      <div class="filter-row">
+        <div class="diff-tabs" id="diffTabs">
+          <button class="tab-btn active" data-diff="all">Tất cả (300)</button>
+          <button class="tab-btn tab-easy" data-diff="Dễ">🟢 Dễ (100)</button>
+          <button class="tab-btn tab-med" data-diff="Trung bình">🟡 Trung bình (100)</button>
+          <button class="tab-btn tab-hard" data-diff="Khó vừa phải">🔴 Khó vừa phải (100)</button>
+        </div>
+
+        <div class="search-and-jump">
+          <select class="cat-select" id="catFilter">
+            <option value="all">Tất cả chủ đề</option>
+          </select>
+          <input type="text" class="search-input" id="searchInput" placeholder="🔍 Tìm kiếm bài tập..." />
+          <div style="display: flex; align-items: center; gap: 4px;">
+            <input type="number" class="jump-input" id="jumpInput" placeholder="Số..." min="1" max="300" />
+            <button class="btn btn-outline" id="jumpBtn" style="padding: 6px 12px; font-size: 0.85rem;">Đến</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Navigation Dots & Score Tracker -->
+    <section class="nav-tracker" aria-label="Bộ chọn câu hỏi">
+      <div class="tracker-title">
+        <span id="trackerLabel">⚡ Danh sách câu hỏi:</span>
+        <div class="nav-buttons-container" id="navButtonsContainer">
+          <!-- Dots dynamically rendered by JS -->
+        </div>
+        <div class="nav-pagination" id="navPagination" style="display: none;">
+          <button class="page-btn" id="prevPageBtn">◀ Trang trước</button>
+          <span id="pageInfoText">Trang 1 / 15</span>
+          <button class="page-btn" id="nextPageBtn">Trang sau ▶</button>
+        </div>
+      </div>
+      <div class="score-pill" id="scoreDisplay">
+        ⭐ Điểm số: <b>0 / 300</b> (0 bài đã làm)
+      </div>
+    </section>
+
+    <!-- Main Problem Content Area -->
+    <main id="problemsArea">
+      <!-- Problem cards dynamically rendered by JS -->
+    </main>
+
+    <!-- Print Answer Key (Chỉ hiện ở trang in cuối cùng) -->
+    <div class="print-only print-answer-key" id="printAnswerSection">
+      <h3 style="font-size: 14pt; margin-bottom: 12px; border-bottom: 2px solid #000; padding-bottom: 6px;">
+        BẢNG ĐÁP ÁN PHIẾU BÀI TẬP TƯ DUY
+      </h3>
+      <div id="printAnswerGrid" style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; font-size: 10pt;">
+        <!-- Filled dynamically before print -->
+      </div>
+      <div style="display: flex; justify-content: space-between; margin-top: 30px;">
+        <div><b>Điểm số đạt được:</b> ........ / 100</div>
+        <div><b>Lời nhận xét của cô / phụ huynh:</b> ............................................................................</div>
+      </div>
+    </div>
+
+    <!-- App Footer -->
+    <footer class="app-footer">
+      <p>💡 <b>Kho 300 Bài Toán Tư Duy Logic Lớp 1</b> • Thiết kế chuẩn sư phạm trực quan, tối ưu cho học sinh 6 - 7 tuổi.</p>
+    </footer>
+
+  </div>
+
+  <!-- Victory / Completion Modal -->
+  <div class="modal-overlay" id="victoryModal">
+    <div class="modal-card">
+      <div class="trophy-anim">🏆</div>
+      <h2 class="modal-title" id="modalTitle">CHÚC MỪNG BÉ YÊU!</h2>
+      <div class="modal-score" id="modalScore">Bé đã hoàn thành xuất sắc!</div>
+      <p class="modal-desc" id="modalDesc">
+        Bé thật thông minh và kiên trì! Bé đã giải đúng các câu đố toán học logic một cách tài tình.
+      </p>
+      <div class="modal-actions">
+        <button class="btn btn-outline" id="modalCloseBtn">
+          👀 Xem lại bài làm
+        </button>
+        <button class="btn btn-primary" id="modalRestartBtn">
+          🔄 Thử sức bộ đề khác
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/data.js"></script>
+  <script src="js/english-data.js"></script>
+  <script src="js/visual-engine.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
+

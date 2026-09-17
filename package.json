@@ -1,0 +1,23 @@
+{
+  "name": "300-bai-toan-tu-duy-logic-lop-1",
+  "version": "2.0.0",
+  "description": "Kho 300 bài toán tư duy logic lớp 1 chuẩn sư phạm cho trẻ 6-7 tuổi",
+  "main": "index.html",
+  "scripts": {
+    "start": "serve -l 8000 .",
+    "dev": "serve -l 3000 ."
+  },
+  "keywords": [
+    "toan-tu-duy",
+    "logic",
+    "lop-1",
+    "giao-duc",
+    "kangaroo",
+    "timo"
+  ],
+  "author": "Antigravity AI",
+  "license": "MIT",
+  "devDependencies": {
+    "serve": "^14.2.0"
+  }
+}

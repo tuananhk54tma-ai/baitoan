@@ -1,0 +1,11 @@
+version: '3.8'
+
+services:
+  toan-logic-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: toan_logic_web_app
+    ports:
+      - "8080:80"
+    restart: always
